@@ -27,13 +27,13 @@ export default async function RootLayout({
       <UserProvider>
         <ValidUser />
         <WindowSizeInitializer />
-        <Header />
         <body
           className={cn(
             inter.className,
             "w-screen h-screen overflow-y-auto overflow-x-hidden",
           )}
         >
+          <Header />
           {children}
         </body>
       </UserProvider>

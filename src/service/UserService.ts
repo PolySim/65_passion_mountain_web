@@ -11,7 +11,19 @@ const isLoggedIn = async (): Promise<boolean> => {
   return !!session;
 };
 
+const isAdmin = async (): Promise<boolean> => {
+  const user = await getUser();
+  return user?.app_metadata?.role === "admin";
+};
+
+const idToken = async () => {
+  const session = await getSession();
+  return session?.idToken;
+};
+
 export const UserService = {
   user: getUser,
   isLoggedIn,
+  idToken,
+  isAdmin,
 };

@@ -1,5 +1,5 @@
 const NavBarDesktop = () => {
-  return <></>;
+  return <>navBarDesktop</>;
 };
 
 export default NavBarDesktop;
