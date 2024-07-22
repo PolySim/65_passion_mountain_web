@@ -1,6 +1,11 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import { UserProvider } from "@auth0/nextjs-auth0/client";
+import ValidUser from "@/service/validUser";
+import { cn } from "@/lib/utils";
+import WindowSizeInitializer from "@/service/WindowSizeInitializer";
+import Header from "@/components/header/Header";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -12,14 +17,26 @@ export const metadata: Metadata = {
   description: "65 Passion Montagne",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
     <html lang="fr">
-      <body className={inter.className}>{children}</body>
+      <UserProvider>
+        <ValidUser />
+        <WindowSizeInitializer />
+        <Header />
+        <body
+          className={cn(
+            inter.className,
+            "w-screen h-screen overflow-y-auto overflow-x-hidden",
+          )}
+        >
+          {children}
+        </body>
+      </UserProvider>
     </html>
   );
 }
