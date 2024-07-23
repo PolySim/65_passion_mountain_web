@@ -53,6 +53,9 @@ const config = {
       minWidth: {
         screen: "100vw",
       },
+      minHeight: {
+        screen: "100vh",
+      },
     },
   },
   plugins: [require("tailwindcss-animate")],
