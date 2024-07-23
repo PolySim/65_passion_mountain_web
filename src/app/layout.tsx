@@ -31,7 +31,7 @@ export default async function RootLayout({
         <body
           className={cn(
             inter.className,
-            "flex flex-col w-screen min-h-screen overflow-y-auto overflow-x-hidden",
+            "flex flex-col w-screen min-h-screen h-screen overflow-y-auto overflow-x-hidden",
           )}
         >
           <Header />

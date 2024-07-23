@@ -24,7 +24,7 @@ const CategoriesMobileContainer = ({ children }: PropsWithChildren) => {
     <div
       ref={containerRef}
       className={cn(
-        "absolute transition top-0 left-0 h-screen w-screen overflow-x-hidden flex scroll-smooth",
+        "absolute transition top-0 left-0 h-screen w-screen z-20 overflow-x-hidden flex scroll-smooth",
         {
           "-translate-x-full": !isOpen,
           "translate-x-0": isOpen,
