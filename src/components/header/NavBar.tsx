@@ -1,5 +1,5 @@
 import WindowSizeContainer from "@/service/WindowSizeContainer";
-import NavBarMobile from "@/components/header/NavBarMobile";
+import NavBarMobile from "@/components/header/mobile/NavBarMobile";
 import NavBarDesktop from "@/components/header/NavBarDesktop";
 import { getCategories } from "@/utils/categories/categoriesAction";
 
@@ -10,7 +10,7 @@ const NavBar = async () => {
   return (
     <>
       <WindowSizeContainer maxWidth={WIDTH}>
-        <NavBarMobile />
+        <NavBarMobile categories={categories} />
       </WindowSizeContainer>
       <WindowSizeContainer minWidth={WIDTH}>
         <NavBarDesktop categories={categories} />
