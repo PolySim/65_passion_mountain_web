@@ -31,7 +31,9 @@ const config = {
         black: "#0f0f0f",
         melon: "#ffc9b9",
         orange: "#D68C45",
-        gray: "#7d7c83",
+        gray: {
+          normal: "#7d7c83",
+        },
         yellow: {
           light: "#fefee3",
         },
