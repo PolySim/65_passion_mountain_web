@@ -11,7 +11,7 @@ const OpenBurgerMenu = () => {
   return (
     <div
       onClick={setBurgerMenuOpen}
-      className={`flex z-30 md:hidden relative text-black w-[50px] mt-2.5 ${burgerMenuOpen ? "menu-open" : "menu-close"}`}
+      className={`flex z-30 relative text-black w-[50px] mt-2.5 ${burgerMenuOpen ? "menu-open" : "menu-close"}`}
     >
       <span />
       <span />
