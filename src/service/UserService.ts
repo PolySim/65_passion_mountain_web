@@ -23,7 +23,7 @@ const idToken = async () => {
 
 const id = async () => {
   const user = await getUser();
-  return user?.sub;
+  return user?.email;
 };
 
 export const UserService = {

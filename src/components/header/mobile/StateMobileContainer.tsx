@@ -1,9 +1,11 @@
 "use client";
 
 import { useHeaderStore } from "@/store/headerStore";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { HikingState } from "@/types/Categories.type";
 import { getCategoryState } from "@/utils/categories/categoriesAction";
+import CloseModalContainer from "@/components/header/mobile/CloseModalContainer";
+import { CategoryId } from "@/routes";
 
 const StateMobileContainer = () => {
   const stateOpen = useHeaderStore((state) => state.stateOpen);
@@ -26,13 +28,22 @@ const StateMobileContainer = () => {
       >
         Retour aux catégories
       </p>
-      {(states || []).map((state) => (
-        <p
-          key={`${stateOpen}-${state.id}`}
+      <CloseModalContainer>
+        <CategoryId.Link
+          categoryId={stateOpen?.toString() || ""}
           className="text-xl font-bold text-black font-rubik"
         >
-          {state.state}
-        </p>
+          Voir tout
+        </CategoryId.Link>
+      </CloseModalContainer>
+      {(states || []).map((state) => (
+        <React.Fragment key={`${stateOpen}-${state.id}`}>
+          <CloseModalContainer>
+            <p className="text-xl font-bold text-black font-rubik">
+              {state.state}
+            </p>
+          </CloseModalContainer>
+        </React.Fragment>
       ))}
     </div>
   );
