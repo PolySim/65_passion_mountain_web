@@ -13,3 +13,17 @@ export type HikingExplore = {
   title: string;
   state_id?: number;
 };
+
+export type HikingInformation = {
+  main_image: number | null;
+  main_image_position: number;
+  state: string;
+  content: string;
+  indication: string;
+  title: string;
+  difficulty: string;
+  length: number;
+  elevation: number;
+  duration: string;
+  images: number[];
+};
