@@ -6,6 +6,7 @@ import { useCallback, useEffect, useState } from "react";
 import { findHikes } from "@/utils/hikes/hikes";
 import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
+import { CategoryIdStateStateId } from "@/routes";
 
 const SearchBar = ({ hikes }: { hikes: HikingSearch[] }) => {
   const router = useRouter();
@@ -19,7 +20,9 @@ const SearchBar = ({ hikes }: { hikes: HikingSearch[] }) => {
   const handlerEnter = useCallback(() => {
     const hiking = hikesSearch.find((_hiking, index) => index === indexFocus);
     if (indexFocus === -1 || !hiking) return;
-    router.push(`/${hiking.categoriesId}/${hiking.state_id}/${hiking.id}`);
+    router.push(
+      `/${hiking.categoriesId}/state/${hiking.state_id}/${hiking.id}`,
+    );
   }, [hikesSearch, indexFocus, router]);
 
   const handlerKeyDown = useCallback(
@@ -61,20 +64,26 @@ const SearchBar = ({ hikes }: { hikes: HikingSearch[] }) => {
       {hikesSearch.length > 0 && (
         <div className="absolute top-[1.8125rem] left-0 w-full max-h-72 overflow-y-auto z-10 pt-[1.8125rem] bg-white rounded-b-3xl">
           {hikesSearch.map((hiking, index) => (
-            <div
+            <CategoryIdStateStateId.Link
+              categoryId={hiking.categoriesId.toString()}
+              stateId={hiking.state_id.toString()}
+              legacyBehavior
               key={hiking.id}
-              className={cn(
-                "w-full py-3 px-[3.625rem] hover:bg-yellow-light cursor-pointer",
-                {
-                  "bg-yellow-light": indexFocus === index,
-                },
-              )}
             >
-              <p className="text-base">{hiking.title}</p>
-              <p className="text-gray-500 text-sm">
-                <span>{hiking.state}</span> - <span>{hiking.difficulty}</span>
-              </p>
-            </div>
+              <div
+                className={cn(
+                  "w-full py-3 px-[3.625rem] hover:bg-yellow-light cursor-pointer",
+                  {
+                    "bg-yellow-light": indexFocus === index,
+                  },
+                )}
+              >
+                <p className="text-base">{hiking.title}</p>
+                <p className="text-gray-500 text-sm">
+                  <span>{hiking.state}</span> - <span>{hiking.difficulty}</span>
+                </p>
+              </div>
+            </CategoryIdStateStateId.Link>
           ))}
         </div>
       )}

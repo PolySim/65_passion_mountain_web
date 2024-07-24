@@ -5,7 +5,7 @@ import React, { useEffect, useState } from "react";
 import { HikingState } from "@/types/Categories.type";
 import { getCategoryState } from "@/utils/categories/categoriesAction";
 import CloseModalContainer from "@/components/header/mobile/CloseModalContainer";
-import { CategoryId } from "@/routes";
+import { CategoryId, CategoryIdStateStateId } from "@/routes";
 
 const StateMobileContainer = () => {
   const stateOpen = useHeaderStore((state) => state.stateOpen);
@@ -39,9 +39,16 @@ const StateMobileContainer = () => {
       {(states || []).map((state) => (
         <React.Fragment key={`${stateOpen}-${state.id}`}>
           <CloseModalContainer>
-            <p className="text-xl font-bold text-black font-rubik">
-              {state.state}
-            </p>
+            <CategoryIdStateStateId.Link
+              categoryId={(stateOpen || -1).toString()}
+              stateId={state.id.toString()}
+              legacyBehavior
+              key={state.state}
+            >
+              <p className="text-xl font-bold text-black font-rubik">
+                {state.state}
+              </p>
+            </CategoryIdStateStateId.Link>
           </CloseModalContainer>
         </React.Fragment>
       ))}
