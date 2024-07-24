@@ -6,6 +6,7 @@ import ValidUser from "@/service/validUser";
 import { cn } from "@/lib/utils";
 import WindowSizeInitializer from "@/service/WindowSizeInitializer";
 import Header from "@/components/header/Header";
+import Footer from "@/components/footer/Footer";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -30,11 +31,12 @@ export default async function RootLayout({
         <body
           className={cn(
             inter.className,
-            "w-screen h-screen overflow-y-auto overflow-x-hidden",
+            "flex flex-col w-screen min-h-screen h-screen overflow-y-auto overflow-x-hidden",
           )}
         >
           <Header />
           {children}
+          <Footer />
         </body>
       </UserProvider>
     </html>
