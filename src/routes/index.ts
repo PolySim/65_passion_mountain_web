@@ -7,6 +7,7 @@ const defaultInfo = {
 };
 
 import * as HomeRoute from "@/app/page.info";
+import * as CategoryIdRoute from "@/app/[categoryId]/page.info";
 import * as ApiAuthAuth0Route from "@/app/api/auth/[auth0]/route.info";
 
 export const Home = makeRoute(
@@ -14,6 +15,13 @@ export const Home = makeRoute(
   {
     ...defaultInfo,
     ...HomeRoute.Route
+  }
+);
+export const CategoryId = makeRoute(
+  "/[categoryId]",
+  {
+    ...defaultInfo,
+    ...CategoryIdRoute.Route
   }
 );
 export const ApiAuthAuth0 = makeRoute(
