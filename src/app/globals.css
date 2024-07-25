@@ -82,3 +82,7 @@ body {
   opacity: 0.15;
   background: black;
 }
+
+.leaflet-container .leaflet-control-attribution {
+  display: none;
+}
