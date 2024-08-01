@@ -13,9 +13,6 @@ const config = {
     container: {
       center: true,
       padding: "2rem",
-      screens: {
-        "2xl": "1400px",
-      },
     },
     extend: {
       fontFamily: {
@@ -57,6 +54,9 @@ const config = {
       },
       minHeight: {
         screen: "100vh",
+      },
+      screens: {
+        xs: "630px",
       },
     },
   },

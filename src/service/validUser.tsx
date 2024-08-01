@@ -1,9 +1,13 @@
-import { redirect } from "next/navigation";
-import { UserService } from "@/service/UserService";
+"use client";
 
-const ValidUser = async () => {
-  if (!(await UserService.isLoggedIn())) {
-    redirect("/api/auth/login");
+import { useRouter } from "next/navigation";
+import { useUser } from "@auth0/nextjs-auth0/client";
+
+const ValidUser = () => {
+  const router = useRouter();
+  const { user, isLoading } = useUser();
+  if (!isLoading && !user) {
+    router.replace("/api/auth/login");
   }
 
   return <></>;
