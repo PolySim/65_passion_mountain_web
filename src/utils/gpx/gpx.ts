@@ -11,6 +11,7 @@ export const formatGPX = ({
 }) => {
   const parser = new gpxParser();
   parser.parse(gpx);
+  if (parser.tracks.length === 0) return;
   togglePositions(
     parser.tracks[0].points.map((point) => [point.lat, point.lon]),
   );
