@@ -3,8 +3,17 @@ import { Star } from "lucide-react";
 import Image from "next/image";
 import WindowSizeContainer from "@/service/WindowSizeContainer";
 import { cn } from "@/lib/utils";
+import ToggleFavorite from "@/components/hikes/ToggleFavorite";
 
-const HeaderHiking = ({ hiking }: { hiking: HikingInformation }) => {
+const HeaderHiking = ({
+  hiking,
+  hikingId,
+  isFavorite,
+}: {
+  hiking: HikingInformation;
+  hikingId: string;
+  isFavorite: boolean;
+}) => {
   return (
     <div className="relative w-full h-[350px] bg-gray-400">
       <Image
@@ -38,7 +47,13 @@ const HeaderHiking = ({ hiking }: { hiking: HikingInformation }) => {
             </div>
           </div>
           <WindowSizeContainer minWidth={768}>
-            <Star className={cn("text-green-light w-10 h-10 cursor-pointer")} />
+            <ToggleFavorite isFavorite={isFavorite} hikingId={hikingId}>
+              <Star
+                className={cn("text-green-light w-10 h-10 cursor-pointer", {
+                  "fill-green-light": isFavorite,
+                })}
+              />
+            </ToggleFavorite>
           </WindowSizeContainer>
         </div>
       </div>

@@ -21,9 +21,14 @@ const idToken = async () => {
   return session?.idToken;
 };
 
-const id = async () => {
+const email = async () => {
   const user = await getUser();
   return user?.email;
+};
+
+const id = async () => {
+  const user = await getUser();
+  return user?.sub;
 };
 
 export const UserService = {
@@ -31,5 +36,6 @@ export const UserService = {
   isLoggedIn,
   idToken,
   isAdmin,
+  email,
   id,
 };

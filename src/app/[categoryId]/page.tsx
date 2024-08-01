@@ -6,7 +6,10 @@ const getHikes = async (categoryId: string) => {
   "use server";
   switch (categoryId) {
     case "favorite":
-      return await getFavoriteHikes({ userId: await UserService.id() });
+      return await getFavoriteHikes({
+        token: (await UserService.idToken()) || "",
+        userId: await UserService.id(),
+      });
     default:
       return await getCategoryHikes({ categoryId: categoryId });
   }

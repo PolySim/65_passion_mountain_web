@@ -7,6 +7,8 @@ import Stats from "@/components/hikes/Information/Stats";
 import Information from "@/components/hikes/Information/Information";
 import Interest from "@/components/hikes/Information/Interest";
 import dynamic from "next/dynamic";
+import { getFavoriteHikes } from "@/utils/hikes/hikesAction";
+import { UserService } from "@/service/UserService";
 
 const GPX = dynamic(() => import("@/components/hikes/GPX"), { ssr: false });
 
@@ -17,19 +19,32 @@ export default async function HikingPage({
 }) {
   const hiking = await getHiking({ hikingId: params.hikingId });
   const gpx = await getGPX({ hikingId: params.hikingId });
+  const favorites = await getFavoriteHikes({
+    token: (await UserService.idToken()) || "",
+    userId: await UserService.id(),
+  });
+
+  const isFavorite = !!favorites.find(
+    (favorite) => favorite.id.toString() === params.hikingId,
+  );
+
   return (
     <main className="flex-1 bg-yellow-light py-16 px-4 md:px-8">
       <FullScreenImages images={hiking.images} title={hiking.title} />
       <div className="w-full max-w-7xl rounded-2xl overflow-hidden mx-auto shadow-md bg-white">
-        <HeaderHiking hiking={hiking} />
+        <HeaderHiking
+          hiking={hiking}
+          isFavorite={isFavorite}
+          hikingId={params.hikingId}
+        />
         <div className="flex flex-col lg:flex-row w-full">
           <div className="flex flex-col gap-8 flex-1 p-4">
             <Stats hiking={hiking} />
             <Information hiking={hiking} />
             <Interest
-              hiking={hiking}
               isGPX={!(gpx === null || gpx === '"Get gpx error"')}
               hikingId={params.hikingId}
+              isFavorite={isFavorite}
             />
           </div>
           <div className="flex flex-col gap-4 lg:border-l lg:border-gray-300 w-full lg:w-4/12 p-4">

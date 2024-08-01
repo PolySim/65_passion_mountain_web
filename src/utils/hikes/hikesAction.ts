@@ -1,6 +1,8 @@
 "use server";
 
 import { HikingExplore, HikingSearch } from "@/types/Hiking.type";
+import { revalidateTag } from "next/cache";
+import { UserService } from "@/service/UserService";
 
 export const getHikes = async () => {
   return (await fetch(`${process.env.API_URL}/hiking/getAllHikes`, {
@@ -33,8 +35,84 @@ export const getStateHikes = async ({
   ).then((res) => res.json())) as Promise<HikingExplore[]>;
 };
 
-export const getFavoriteHikes = async ({ userId }: { userId: string }) => {
-  return (await fetch(`${process.env.API_URL}/hiking/getFavorites/${userId}`, {
+export const getFavoriteHikes = async ({
+  token,
+  userId,
+}: {
+  token: string;
+  userId: string;
+}) => {
+  return (await fetch(`${process.env.API_URL}/hiking/getFavorites/favorite`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
     next: { tags: [`hikes_favorite_${userId}`] },
   }).then((res) => res.json())) as Promise<HikingExplore[]>;
+};
+
+export const addFavorite = async ({
+  token,
+  userId,
+  hikeId,
+}: {
+  token: string;
+  userId: string;
+  hikeId: string;
+}) => {
+  return await fetch(`${process.env.API_URL}/user/addFavorite`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+    method: "POST",
+    body: JSON.stringify({
+      hikingId: hikeId,
+    }),
+  })
+    .then((res) => res.json())
+    .then((data) => {
+      if (data.result) revalidateTag(`hikes_favorite_${userId}`);
+    });
+};
+
+export const removeFavorite = async ({
+  token,
+  userId,
+  hikeId,
+}: {
+  token: string;
+  userId: string;
+  hikeId: string;
+}) => {
+  return await fetch(`${process.env.API_URL}/user/removeFavorite`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+    method: "DELETE",
+    body: JSON.stringify({
+      hikingId: hikeId,
+    }),
+  })
+    .then((res) => res.json())
+    .then((data) => {
+      if (data.result) revalidateTag(`hikes_favorite_${userId}`);
+    });
+};
+
+export const toggleFavorite = async (isFavorite: boolean, hikingId: string) => {
+  if (isFavorite) {
+    await removeFavorite({
+      token: (await UserService.idToken()) || "",
+      userId: await UserService.id(),
+      hikeId: hikingId,
+    });
+  } else {
+    await addFavorite({
+      token: (await UserService.idToken()) || "",
+      userId: await UserService.id(),
+      hikeId: hikingId,
+    });
+  }
 };

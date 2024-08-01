@@ -1,16 +1,16 @@
 import React from "react";
-import { HikingInformation } from "@/types/Hiking.type";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import ToggleFavorite from "@/components/hikes/ToggleFavorite";
 
 const Interest = ({
-  hiking,
   hikingId,
   isGPX,
+  isFavorite,
 }: {
-  hiking: HikingInformation;
   hikingId: string;
   isGPX: boolean;
+  isFavorite: boolean;
 }) => {
   return (
     <div className="ml-4 border-t border-gray-300 pt-4">
@@ -22,11 +22,15 @@ const Interest = ({
               href={`${process.env.API_URL}/hiking/gpx/${hikingId}`}
               download
             >
-              Télécharger le GPX{" "}
+              Télécharger le GPX
             </Link>
           </Button>
         )}
-        <Button>Ajouter le en favoris</Button>
+        <ToggleFavorite isFavorite={isFavorite} hikingId={hikingId}>
+          <Button>
+            {isFavorite ? "Retirer de mes favoris" : "Ajouter en favori"}
+          </Button>
+        </ToggleFavorite>
       </div>
     </div>
   );
