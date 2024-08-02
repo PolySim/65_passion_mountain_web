@@ -25,7 +25,7 @@ import { useToast } from "@/components/ui/use-toast";
 const formSchema = z.object({
   title: z
     .string()
-    .min(3, { message: "Le titre doit être au minimum 3 caractères" }),
+    .min(3, { message: "Le titre doit être au minimum de 3 caractères" }),
   difficulty: z.string().min(1),
   state: z.string().min(1),
 });
