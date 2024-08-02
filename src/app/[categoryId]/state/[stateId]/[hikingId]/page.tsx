@@ -29,7 +29,7 @@ export default async function HikingPage({
   );
 
   return (
-    <main className="flex-1 bg-yellow-light py-16 px-4 md:px-8">
+    <>
       <FullScreenImages images={hiking.images} title={hiking.title} />
       <div className="w-full max-w-7xl rounded-2xl overflow-hidden mx-auto shadow-md bg-white">
         <HeaderHiking
@@ -53,6 +53,6 @@ export default async function HikingPage({
           </div>
         </div>
       </div>
-    </main>
+    </>
   );
 }

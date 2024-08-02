@@ -6,7 +6,7 @@ import ImageVisible from "./ImageVisible";
 import Image from "next/image";
 import CategoryHover from "./CategoryHover";
 import HikingSate from "@/components/header/HikingSate";
-import { CategoryId } from "@/routes";
+import { Admin, CategoryId } from "@/routes";
 import Logout from "@/components/header/Logout";
 
 const NavBarDesktop = async ({
@@ -61,7 +61,11 @@ const NavBarDesktop = async ({
       >
         <CategoryId.Link categoryId="favorite">Mes Favoris</CategoryId.Link>
       </Button>
-      {isAdmin && <Button weight="bold">Admin</Button>}
+      {isAdmin && (
+        <Button weight="bold" asChild>
+          <Admin.Link> Admin</Admin.Link>
+        </Button>
+      )}
       <Logout />
     </div>
   );

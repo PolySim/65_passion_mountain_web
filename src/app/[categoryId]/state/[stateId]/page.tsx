@@ -9,12 +9,10 @@ export default async function HikingStatePage({
   const hikes = await getStateHikes(params);
 
   return (
-    <main className="flex-1 bg-yellow-light py-16 px-8">
-      <GridHikes
-        hikes={hikes}
-        categoryId={params.categoryId}
-        stateId={params.stateId}
-      />
-    </main>
+    <GridHikes
+      hikes={hikes}
+      categoryId={params.categoryId}
+      stateId={params.stateId}
+    />
   );
 }

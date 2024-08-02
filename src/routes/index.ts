@@ -10,6 +10,8 @@ import * as HomeRoute from "@/app/page.info";
 import * as CategoryIdRoute from "@/app/[categoryId]/page.info";
 import * as CategoryIdStateStateIdRoute from "@/app/[categoryId]/state/[stateId]/page.info";
 import * as CategoryIdStateStateIdHikingIdRoute from "@/app/[categoryId]/state/[stateId]/[hikingId]/page.info";
+import * as AdminRoute from "@/app/admin/page.info";
+import * as AdminCategoryIdRoute from "@/app/admin/[categoryId]/page.info";
 import * as ApiAuthAuth0Route from "@/app/api/auth/[auth0]/route.info";
 
 export const Home = makeRoute(
@@ -38,6 +40,20 @@ export const CategoryIdStateStateIdHikingId = makeRoute(
   {
     ...defaultInfo,
     ...CategoryIdStateStateIdHikingIdRoute.Route
+  }
+);
+export const Admin = makeRoute(
+  "/admin",
+  {
+    ...defaultInfo,
+    ...AdminRoute.Route
+  }
+);
+export const AdminCategoryId = makeRoute(
+  "/admin/[categoryId]",
+  {
+    ...defaultInfo,
+    ...AdminCategoryIdRoute.Route
   }
 );
 export const ApiAuthAuth0 = makeRoute(

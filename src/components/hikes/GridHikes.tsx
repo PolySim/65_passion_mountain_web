@@ -2,6 +2,8 @@ import { CategoryIdStateStateIdHikingId } from "@/routes";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { HikingExplore } from "@/types/Hiking.type";
+import Grid from "@/components/ui/Grid";
+import Card from "@/components/ui/Card";
 
 const GridHikes = ({
   hikes,
@@ -13,7 +15,7 @@ const GridHikes = ({
   stateId?: string;
 }) => {
   return (
-    <div className="grid gap-8 md:gap-12 grid-cols-1 xs:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 max-w-7xl mx-auto w-full">
+    <Grid>
       {hikes.map((hiking) => (
         <CategoryIdStateStateIdHikingId.Link
           categoryId={categoryId}
@@ -22,7 +24,7 @@ const GridHikes = ({
           key={hiking.id}
           legacyBehavior
         >
-          <div className="shadow-md rounded-2xl overflow-hidden w-full h-full bg-white hover:scale-105 transition duration-300">
+          <Card>
             {hiking.main_image ? (
               <Image
                 src={`${process.env.API_URL}/hiking/getImage/${hiking.main_image}`}
@@ -40,10 +42,10 @@ const GridHikes = ({
               </h3>
               <Button variant="secondary">Voir le topo</Button>
             </div>
-          </div>
+          </Card>
         </CategoryIdStateStateIdHikingId.Link>
       ))}
-    </div>
+    </Grid>
   );
 };
 
