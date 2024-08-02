@@ -1,10 +1,11 @@
-import { getCategoryHikes } from "@/utils/hikes/hikesAction";
+import { getCategoryHikes, getStates } from "@/utils/hikes/hikesAction";
 import Grid from "@/components/ui/Grid";
 import { AdminCategoryIdHikingId } from "@/routes";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import Card from "@/components/ui/Card";
 import CreateHike from "@/components/admin/CreateHike";
+import { getDifficulties } from "@/utils/difficulty/difficultyAction";
 
 export default async function AdminCategoryPage({
   params,
@@ -12,10 +13,12 @@ export default async function AdminCategoryPage({
   params: { categoryId: string };
 }) {
   const hikes = await getCategoryHikes({ categoryId: params.categoryId });
+  const difficulties = await getDifficulties();
+  const states = await getStates({ categoryId: params.categoryId });
 
   return (
     <div className="flex flex-col gap-8 max-w-7xl mx-auto w-full">
-      <CreateHike />
+      <CreateHike difficulties={difficulties} states={states} />
       <Grid>
         {hikes.map((hiking) => (
           <AdminCategoryIdHikingId.Link
