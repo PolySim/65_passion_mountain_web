@@ -16,7 +16,6 @@ const FormInput = ({
   name,
   label,
   description,
-  message,
   disabled,
   type,
 }: FormFieldType) => {
@@ -30,7 +29,7 @@ const FormInput = ({
             <Input disabled={disabled} {...field} type={type} />
           </FormControl>
           <FormDescription>{description}</FormDescription>
-          <FormMessage>{message}</FormMessage>
+          <FormMessage />
         </FormItem>
       )}
       name={name}

@@ -6,7 +6,6 @@ export type FormFieldType = {
   type: string;
   label?: string;
   description?: string;
-  message?: string;
   placeholder?: string;
   disabled?: boolean;
 };

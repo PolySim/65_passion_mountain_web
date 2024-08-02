@@ -163,6 +163,7 @@ export const createHike = async ({
       if (data.hikingId) {
         revalidateTag("hikes");
         revalidateTag(`hikes_${categoryId}`);
+        revalidateTag(`hikes_${categoryId}_${state}`);
         redirect(`/admin/${categoryId}/${data.hikingId}`);
       } else {
         return "error";

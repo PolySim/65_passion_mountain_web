@@ -19,7 +19,6 @@ const FormSelect = ({
   control,
   name,
   description,
-  message,
   label,
   placeholder,
   disabled,
@@ -55,7 +54,7 @@ const FormSelect = ({
             </SelectContent>
           </Select>
           <FormDescription>{description}</FormDescription>
-          <FormMessage>{message}</FormMessage>
+          <FormMessage />
         </FormItem>
       )}
     />
