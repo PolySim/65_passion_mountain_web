@@ -4,7 +4,7 @@ import { AdminCategoryIdHikingId } from "@/routes";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import Card from "@/components/ui/Card";
-import CreateHike from "@/components/admin/CreateHike";
+import ModalHikeInformation from "@/components/admin/ModalHikeInformation";
 import { getDifficulties } from "@/utils/difficulty/difficultyAction";
 
 export default async function AdminCategoryPage({
@@ -18,7 +18,7 @@ export default async function AdminCategoryPage({
 
   return (
     <div className="flex flex-col gap-8 max-w-7xl mx-auto w-full">
-      <CreateHike difficulties={difficulties} states={states} />
+      <ModalHikeInformation difficulties={difficulties} states={states} />
       <Grid>
         {hikes.map((hiking) => (
           <AdminCategoryIdHikingId.Link

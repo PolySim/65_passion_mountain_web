@@ -18,9 +18,10 @@ import { Difficulty } from "@/utils/difficulty/difficultyAction";
 import { createHike, State } from "@/utils/hikes/hikesAction";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useState } from "react";
 import { useParams } from "next/navigation";
 import { useToast } from "@/components/ui/use-toast";
+import { updateHeader } from "@/utils/hiking/hikingAction";
+import { useState } from "react";
 
 const formSchema = z.object({
   title: z
@@ -30,54 +31,101 @@ const formSchema = z.object({
   state: z.string().min(1),
 });
 
-const CreateHike = ({
+const ModalHikeInformation = ({
   difficulties,
   states,
+  information,
+  hikingId,
 }: {
   difficulties: Difficulty[];
   states: State[];
+  information?: {
+    title: string;
+    difficulty: string;
+    state: string;
+  };
+  hikingId?: string;
 }) => {
+  const [isOpen, setIsOpen] = useState(false);
   const params = useParams();
   const categoryId = params.categoryId as string;
   const { toast } = useToast();
-  const [isSubmitting, setIsSubmitting] = useState(false);
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    defaultValues: {
-      title: "",
-      difficulty: difficulties[0]?.id.toString(),
-      state: states[0]?.id.toString(),
-    },
+    values: information
+      ? {
+          title: information.title,
+          difficulty: difficulties
+            .find(
+              (difficulty) => difficulty.difficulty === information.difficulty,
+            )
+            ?.id.toString() as string,
+          state: states
+            .find((state) => state.state === information.state)
+            ?.id.toString() as string,
+        }
+      : {
+          title: "",
+          difficulty: difficulties[0]?.id.toString(),
+          state: states[0]?.id.toString(),
+        },
     resetOptions: {
       keepValues: true,
     },
   });
 
   const onSubmit = async (data: z.infer<typeof formSchema>) => {
-    setIsSubmitting(true);
-    await createHike({ ...data, categoryId }).then((result) => {
-      setIsSubmitting(false);
-      if (result === "error") {
-        toast({
-          title: "Erreur",
-          description:
-            "Une erreur est survenue lors de la création de l'activité",
-          variant: "destructive",
-        });
-      }
-    });
+    if (information) {
+      await updateHeader({
+        ...data,
+        hikingId: hikingId as string,
+        lastState: information.state,
+        categoryId,
+      }).then((result) => {
+        if (result === "error") {
+          console.log("error");
+          toast({
+            title: "Erreur",
+            description:
+              "Une erreur est survenue lors de la modification de l'activité",
+            variant: "destructive",
+          });
+        } else {
+          setIsOpen((curr) => !curr);
+        }
+      });
+    } else {
+      await createHike({ ...data, categoryId }).then((result) => {
+        if (result === "error") {
+          toast({
+            title: "Erreur",
+            description:
+              "Une erreur est survenue lors de la création de l'activité",
+            variant: "destructive",
+          });
+        }
+      });
+    }
   };
 
   return (
-    <Dialog onOpenChange={() => form.reset()}>
+    <Dialog
+      open={isOpen}
+      onOpenChange={() => {
+        setIsOpen((curr) => !curr);
+        form.reset();
+      }}
+    >
       <DialogTrigger asChild>
         <Button variant="secondary" className="w-fit">
-          Nouvelle activité
+          {information ? "Modifier" : "Nouvelle activité"}
         </Button>
       </DialogTrigger>
       <DialogContent className="max-w-[min(900px_,_95vw)]">
         <DialogHeader>
-          <DialogTitle>Nouvelle activité</DialogTitle>
+          <DialogTitle>
+            {information ? "Modifier les informations" : "Nouvelle activité"}
+          </DialogTitle>
         </DialogHeader>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>
@@ -87,13 +135,13 @@ const CreateHike = ({
                 name="title"
                 type="text"
                 label="Titre"
-                disabled={isSubmitting}
+                disabled={form.formState.isSubmitting}
               />
               <FormSelect
                 control={form.control}
                 name="difficulty"
                 label="Difficulté"
-                disabled={isSubmitting}
+                disabled={form.formState.isSubmitting}
                 options={difficulties.map((difficulty) => ({
                   value: difficulty.id.toString(),
                   label: difficulty.difficulty,
@@ -103,7 +151,7 @@ const CreateHike = ({
                 control={form.control}
                 name="state"
                 label="Massif"
-                disabled={isSubmitting}
+                disabled={form.formState.isSubmitting}
                 options={states.map((state) => ({
                   value: state.id.toString(),
                   label: state.state,
@@ -113,15 +161,15 @@ const CreateHike = ({
             <DialogFooter className="flex justify-end gap-2">
               <DialogClose asChild>
                 <Button
-                  disabled={isSubmitting}
+                  disabled={form.formState.isSubmitting}
                   type="button"
                   variant="destructive"
                 >
                   Annuler
                 </Button>
               </DialogClose>
-              <Button disabled={isSubmitting} type="submit">
-                Ajouter
+              <Button disabled={form.formState.isSubmitting} type="submit">
+                {information ? "Modifier" : "Ajouter"}
               </Button>
             </DialogFooter>
           </form>
@@ -131,4 +179,4 @@ const CreateHike = ({
   );
 };
 
-export default CreateHike;
+export default ModalHikeInformation;
