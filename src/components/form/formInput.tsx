@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { FormFieldType } from "@/components/form/formField.types";
+import { Textarea } from "@/components/ui/textarea";
 
 const FormInput = ({
   control,
@@ -26,7 +27,11 @@ const FormInput = ({
         <FormItem>
           <FormLabel>{label}</FormLabel>
           <FormControl>
-            <Input disabled={disabled} {...field} type={type} />
+            {type === "text-area" ? (
+              <Textarea disabled={disabled} {...field} rows={12} />
+            ) : (
+              <Input disabled={disabled} {...field} type={type} />
+            )}
           </FormControl>
           <FormDescription>{description}</FormDescription>
           <FormMessage />

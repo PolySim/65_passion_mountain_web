@@ -63,7 +63,6 @@ export const updateHeader = async ({
   hikingId: string;
 }) => {
   try {
-    console.log(`${process.env.API_URL}/hiking/updateHeader`);
     await fetch(`${process.env.API_URL}/hiking/updateHeader`, {
       headers: {
         "Content-Type": "application/json",
@@ -84,6 +83,59 @@ export const updateHeader = async ({
           revalidateTag(`hikes_${categoryId}`);
           revalidateTag(`hikes_${categoryId}_${state}`);
           revalidateTag(`hikes_${categoryId}_${lastState}`);
+        } else {
+          return "error";
+        }
+      });
+  } catch (error) {
+    return "error";
+  }
+};
+
+export const updateStats = async (props: {
+  distance: string;
+  elevation: string;
+  time: string;
+  hikingId: string;
+}) => {
+  try {
+    await fetch(`${process.env.API_URL}/hiking/updateStatistical`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+      method: "PUT",
+      body: JSON.stringify(props),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.result) {
+          revalidateTag(`hiking_${props.hikingId}`);
+        } else {
+          return "error";
+        }
+      });
+  } catch (error) {
+    return "error";
+  }
+};
+
+export const updateContent = async (props: {
+  description: string;
+  indication: string;
+  hikingId: string;
+}) => {
+  try {
+    await fetch(`${process.env.API_URL}/hiking/updateContent`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+      method: "PUT",
+      body: JSON.stringify(props),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.result) {
+          revalidateTag(`hiking_${props.hikingId}`);
         } else {
           return "error";
         }

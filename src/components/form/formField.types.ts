@@ -3,7 +3,7 @@ import { Control } from "react-hook-form";
 export type FormFieldType = {
   control: Control<any>;
   name: string;
-  type: string;
+  type: "text-area" | string;
   label?: string;
   description?: string;
   placeholder?: string;

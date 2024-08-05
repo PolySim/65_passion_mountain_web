@@ -83,7 +83,6 @@ const ModalHikeInformation = ({
         categoryId,
       }).then((result) => {
         if (result === "error") {
-          console.log("error");
           toast({
             title: "Erreur",
             description:
