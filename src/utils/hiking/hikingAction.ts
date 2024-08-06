@@ -144,3 +144,25 @@ export const updateContent = async (props: {
     return "error";
   }
 };
+
+export const uploadGPX = async (props: {
+  file: FormData;
+  hikingId: string;
+}) => {
+  try {
+    await fetch(`${process.env.API_URL}/hiking/uploadGPX/${props.hikingId}`, {
+      method: "POST",
+      body: props.file,
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.result) {
+          revalidateTag(`hiking_${props.hikingId}`);
+        } else {
+          return "error";
+        }
+      });
+  } catch (error) {
+    return "error";
+  }
+};

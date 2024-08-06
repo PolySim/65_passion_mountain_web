@@ -17,3 +17,8 @@ export type FormSelectType = Omit<FormFieldType, "type"> & {
     disabled?: boolean;
   }[];
 };
+
+export type FormFileType = Omit<FormFieldType, "type"> & {
+  multiple?: boolean;
+  accept?: string;
+};
