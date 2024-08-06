@@ -3,11 +3,17 @@ import { getGPX, getHiking } from "@/utils/hiking/hikingAction";
 import EditStat from "@/components/admin/EditStat";
 import EditContent from "@/components/admin/EditContent";
 import React from "react";
-import GPX from "@/components/hikes/GPX";
-import EditGpx from "@/components/admin/EditGpx";
-import Images from "@/components/hikes/Images/Images";
-import EditImages from "@/components/admin/EditImages";
+import EditGpx from "@/components/admin/EditGpx"; // import EditImages from "@/components/admin/EditImages";
+import dynamic from "next/dynamic";
 
+const ReorderImages = dynamic(
+  () => import("@/components/admin/ReorderImages"),
+  { ssr: false },
+);
+const GPX = dynamic(() => import("@/components/hikes/GPX"), { ssr: false });
+const EditImages = dynamic(() => import("@/components/admin/EditImages"), {
+  ssr: false,
+});
 export default async function AdminHikePage({
   params,
 }: {
@@ -33,7 +39,7 @@ export default async function AdminHikePage({
         <div className="flex flex-col gap-4 lg:border-l lg:border-gray-300 w-full lg:w-4/12 p-4">
           <EditGpx />
           {gpx !== null && gpx !== '"Get gpx error"' && <GPX gpx={gpx} />}
-          <Images images={hiking.images} title="hello" />
+          <ReorderImages defaultImages={hiking.images} />
           <EditImages />
         </div>
       </div>
