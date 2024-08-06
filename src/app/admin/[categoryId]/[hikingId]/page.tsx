@@ -5,6 +5,8 @@ import EditContent from "@/components/admin/EditContent";
 import React from "react";
 import GPX from "@/components/hikes/GPX";
 import EditGpx from "@/components/admin/EditGpx";
+import Images from "@/components/hikes/Images/Images";
+import EditImages from "@/components/admin/EditImages";
 
 export default async function AdminHikePage({
   params,
@@ -31,6 +33,8 @@ export default async function AdminHikePage({
         <div className="flex flex-col gap-4 lg:border-l lg:border-gray-300 w-full lg:w-4/12 p-4">
           <EditGpx />
           {gpx !== null && gpx !== '"Get gpx error"' && <GPX gpx={gpx} />}
+          <Images images={hiking.images} title="hello" />
+          <EditImages />
         </div>
       </div>
     </div>

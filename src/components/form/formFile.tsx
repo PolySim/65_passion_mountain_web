@@ -33,7 +33,10 @@ const FormFile = ({
               type="file"
               accept={accept}
               onChange={(event) =>
-                onChange(event.target.files && event.target.files[0])
+                onChange(
+                  event.target.files &&
+                    (multiple ? event.target.files : event.target.files[0]),
+                )
               }
               multiple={multiple}
             />
