@@ -1,9 +1,9 @@
 import { HikingInformation } from "@/types/Hiking.type";
-import Image from "next/image";
 import ImagePosition from "@/components/admin/header/ImagePosition";
 import ModalHikeInformation from "@/components/admin/ModalHikeInformation";
 import { getDifficulties } from "@/utils/difficulty/difficultyAction";
 import { getStates } from "@/utils/hikes/hikesAction";
+import Image from "next/image";
 
 const AdminHeader = async ({
   hiking,
@@ -19,6 +19,7 @@ const AdminHeader = async ({
     <div className="relative w-full h-[350px] bg-gray-400">
       <Image
         src={`${process.env.API_URL}/hiking/getImage/${hiking.main_image}`}
+        unoptimized
         alt={hiking.title}
         height={350}
         width={1280}

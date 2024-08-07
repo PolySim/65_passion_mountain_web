@@ -5,6 +5,7 @@ import EditContent from "@/components/admin/EditContent";
 import React from "react";
 import EditGpx from "@/components/admin/EditGpx"; // import EditImages from "@/components/admin/EditImages";
 import dynamic from "next/dynamic";
+import { getStates } from "@/utils/hikes/hikesAction";
 
 const ReorderImages = dynamic(
   () => import("@/components/admin/ReorderImages"),
@@ -21,6 +22,10 @@ export default async function AdminHikePage({
 }) {
   const hiking = await getHiking({ hikingId: params.hikingId });
   const gpx = await getGPX({ hikingId: params.hikingId });
+  const states = await getStates({ categoryId: params.categoryId });
+  const state = states.find((state) => state.state === hiking.state);
+
+  console.log(hiking, "heh");
   return (
     <div className="w-full max-w-7xl rounded-2xl overflow-hidden mx-auto shadow-md bg-white">
       <AdminHeader hiking={hiking} params={params} />
@@ -39,7 +44,11 @@ export default async function AdminHikePage({
         <div className="flex flex-col gap-4 lg:border-l lg:border-gray-300 w-full lg:w-4/12 p-4">
           <EditGpx />
           {gpx !== null && gpx !== '"Get gpx error"' && <GPX gpx={gpx} />}
-          <ReorderImages defaultImages={hiking.images} />
+          <ReorderImages
+            defaultImages={hiking.images}
+            mainImage={hiking.main_image}
+            state={state?.id?.toString() || ""}
+          />
           <EditImages />
         </div>
       </div>
