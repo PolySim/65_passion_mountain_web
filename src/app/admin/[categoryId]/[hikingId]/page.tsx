@@ -25,7 +25,6 @@ export default async function AdminHikePage({
   const states = await getStates({ categoryId: params.categoryId });
   const state = states.find((state) => state.state === hiking.state);
 
-  console.log(hiking, "heh");
   return (
     <div className="w-full max-w-7xl rounded-2xl overflow-hidden mx-auto shadow-md bg-white">
       <AdminHeader hiking={hiking} params={params} />

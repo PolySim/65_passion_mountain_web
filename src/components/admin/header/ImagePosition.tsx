@@ -20,10 +20,10 @@ const ImagePosition = ({ position }: { position: number }) => {
   return (
     <div className="flex flex-col gap-2">
       <Button variant="outline" className="p-0 h-fit">
-        <ChevronUp onClick={() => togglePosition(false)} />
+        <ChevronUp onClick={() => togglePosition(true)} />
       </Button>
       <Button variant="outline" className="p-0 h-fit">
-        <ChevronDown onClick={() => togglePosition(true)} />
+        <ChevronDown onClick={() => togglePosition(false)} />
       </Button>
     </div>
   );

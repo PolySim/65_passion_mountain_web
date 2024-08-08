@@ -24,7 +24,7 @@ const AdminHeader = async ({
         height={350}
         width={1280}
         className="object-cover size-full"
-        style={{ objectPosition: `50% ${hiking.main_image_position}` }}
+        style={{ objectPosition: `50% ${hiking.main_image_position}%` }}
       />
       <div className="flex absolute top-0 left-0 size-full">
         <div className="flex justify-between gap-2 mt-auto p-8 w-full">

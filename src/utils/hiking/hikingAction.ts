@@ -34,7 +34,7 @@ export const updateImagePosition = async ({
     method: "PUT",
     body: JSON.stringify({
       hikingId,
-      newPosition: position,
+      newPosition: Math.min(Math.max(0, position), 100),
     }),
   })
     .then((res) => res.json())
