@@ -22,9 +22,5 @@ export default async function CategoryPage({
 }) {
   const hikes = await getHikes(params.categoryId);
 
-  return (
-    <main className="flex-1 bg-yellow-light py-16 px-8">
-      <GridHikes hikes={hikes} categoryId={params.categoryId} />
-    </main>
-  );
+  return <GridHikes hikes={hikes} categoryId={params.categoryId} />;
 }

@@ -3,6 +3,7 @@
 import { HikingExplore, HikingSearch } from "@/types/Hiking.type";
 import { revalidateTag } from "next/cache";
 import { UserService } from "@/service/UserService";
+import { redirect } from "next/navigation";
 
 export const getHikes = async () => {
   return (await fetch(`${process.env.API_URL}/hiking/getAllHikes`, {
@@ -115,4 +116,57 @@ export const toggleFavorite = async (isFavorite: boolean, hikingId: string) => {
       hikeId: hikingId,
     });
   }
+};
+
+export type State = {
+  id: number;
+  state: string;
+  path: string;
+};
+
+export const getStates = async ({ categoryId }: { categoryId: string }) => {
+  try {
+    return (await fetch(
+      `${process.env.API_URL}/hiking/hikesState/${categoryId}`,
+      {},
+    ).then((res) => res.json())) as Promise<State[]>;
+  } catch (error) {
+    return [] as State[];
+  }
+};
+
+export const createHike = async ({
+  title,
+  difficulty,
+  state,
+  categoryId,
+}: {
+  title: string;
+  difficulty: string;
+  state: string;
+  categoryId: string;
+}) => {
+  return await fetch(`${process.env.API_URL}/hiking/createAlbum`, {
+    headers: {
+      "Content-Type": "application/json",
+    },
+    method: "POST",
+    body: JSON.stringify({
+      title,
+      difficulty,
+      state,
+      categoryId,
+    }),
+  })
+    .then((res) => res.json())
+    .then((data) => {
+      if (data.hikingId) {
+        revalidateTag("hikes");
+        revalidateTag(`hikes_${categoryId}`);
+        revalidateTag(`hikes_${categoryId}_${state}`);
+        redirect(`/admin/${categoryId}/${data.hikingId}`);
+      } else {
+        return "error";
+      }
+    });
 };

@@ -3,6 +3,7 @@ import { UserService } from "@/service/UserService";
 import { Button } from "@/components/ui/button";
 import React from "react";
 import BurgerMenu from "@/components/header/mobile/BurgerMenu";
+import { Admin } from "@/routes";
 
 const NavBarMobile = async ({
   categories,
@@ -13,7 +14,11 @@ const NavBarMobile = async ({
 
   return (
     <div className="flex gap-6">
-      {isAdmin && <Button weight="bold">Admin</Button>}
+      {isAdmin && (
+        <Button weight="bold" asChild>
+          <Admin.Link>Admin</Admin.Link>
+        </Button>
+      )}
       <BurgerMenu categories={categories} />
     </div>
   );
