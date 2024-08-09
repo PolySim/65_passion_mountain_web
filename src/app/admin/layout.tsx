@@ -2,33 +2,25 @@ import { Metadata } from "next";
 import { PropsWithChildren } from "react";
 import { UserService } from "@/service/UserService";
 import { Toaster } from "@/components/ui/toaster";
-import { redirect } from "next/navigation";
-import { LoaderCircle } from "lucide-react";
+import ValidAdmin from "@/service/validAdmin";
 
 export const metadata: Metadata = {
   title: "admin",
 };
 
 export default async function AdminLayout({ children }: PropsWithChildren) {
-  const { isAdmin, isLoading } = {
+  const { isAdmin, user } = {
     isAdmin: await UserService.isAdmin(),
-    isLoading: await UserService.isLoading(),
+    user: await UserService.user(),
   };
 
-  if (!isLoading && !isAdmin) {
-    redirect("/");
-  }
-
-  if (isLoading) {
-    return (
-      <div className="flex-1 flex justify-center items-center">
-        <LoaderCircle />
-      </div>
-    );
-  }
+  // if (!isLoading && !isAdmin) {
+  //   redirect("/");
+  // }
 
   return (
     <main className="flex-1 bg-yellow-light py-16 px-4 md:px-8">
+      <ValidAdmin />
       {children}
       <Toaster />
     </main>
