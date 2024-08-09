@@ -63,7 +63,7 @@ const NavBarDesktop = async ({
       </Button>
       {isAdmin && (
         <Button weight="bold" asChild>
-          <Admin.Link> Admin</Admin.Link>
+          <Admin.Link>Admin</Admin.Link>
         </Button>
       )}
       <Logout />

@@ -31,6 +31,11 @@ const id = async () => {
   return user?.sub;
 };
 
+const isLoading = async () => {
+  const session = await getSession();
+  return session?.isLoading;
+};
+
 export const UserService = {
   user: getUser,
   isLoggedIn,
@@ -38,4 +43,5 @@ export const UserService = {
   isAdmin,
   email,
   id,
+  isLoading,
 };
