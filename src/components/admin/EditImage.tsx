@@ -58,7 +58,6 @@ const EditImage = ({
       <Image
         src={`${process.env.NEXT_PUBLIC_API_URL}/hiking/getImage/${image}?count=${count}`}
         alt={`image ${image}`}
-        unoptimized
         width={500}
         height={281}
         className="aspect-video w-full object-cover rounded-lg cursor-grab"

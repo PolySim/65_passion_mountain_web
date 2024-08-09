@@ -8,13 +8,6 @@ const nextConfig = {
       "13.37.217.215:3210",
       "13.37.217.215",
     ],
-    remotePatterns: [
-      {
-        protocol: "http",
-        hostname: "localhost",
-        port: "3210",
-      },
-    ],
   },
 };
 
