@@ -13,7 +13,7 @@ const NavBarMobile = async ({
   const isAdmin = await UserService.isAdmin();
 
   return (
-    <div className="flex gap-6">
+    <div className="flex gap-6 h-10">
       {isAdmin && (
         <Button weight="bold" asChild>
           <Admin.Link>Admin</Admin.Link>
