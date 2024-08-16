@@ -4,6 +4,7 @@ import { HikingExplore, HikingSearch } from "@/types/Hiking.type";
 import { revalidateTag } from "next/cache";
 import { UserService } from "@/service/UserService";
 import { redirect } from "next/navigation";
+import { useUserStore } from "@/store/userStore";
 
 export const getHikes = async () => {
   return (await fetch(`${process.env.API_URL}/hiking/getAllHikes`, {
@@ -61,9 +62,10 @@ export const addFavorite = async ({
   userId: string;
   hikeId: string;
 }) => {
+  const idToken = useUserStore.getState().idToken;
   return await fetch(`${process.env.API_URL}/user/addFavorite`, {
     headers: {
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${idToken || ""}`,
       "Content-Type": "application/json",
     },
     method: "POST",
@@ -86,9 +88,10 @@ export const removeFavorite = async ({
   userId: string;
   hikeId: string;
 }) => {
+  const idToken = useUserStore.getState().idToken;
   return await fetch(`${process.env.API_URL}/user/removeFavorite`, {
     headers: {
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${idToken || ""}`,
       "Content-Type": "application/json",
     },
     method: "DELETE",

@@ -1,13 +1,14 @@
 import { getCategoryHikes, getFavoriteHikes } from "@/utils/hikes/hikesAction";
 import { UserService } from "@/service/UserService";
 import GridHikes from "@/components/hikes/GridHikes";
+import { useUserStore } from "@/store/userStore";
 
-const getHikes = async (categoryId: string) => {
+const getHikes = async (categoryId: string, idToken: string) => {
   "use server";
   switch (categoryId) {
     case "favorite":
       return await getFavoriteHikes({
-        token: (await UserService.idToken()) || "",
+        token: idToken,
         userId: await UserService.id(),
       });
     default:
@@ -20,7 +21,9 @@ export default async function CategoryPage({
 }: {
   params: { categoryId: string };
 }) {
-  const hikes = await getHikes(params.categoryId);
+  const idToken = useUserStore.getState().idToken;
+  console.log("idToken", idToken);
+  const hikes = await getHikes(params.categoryId, idToken || "");
 
   return <GridHikes hikes={hikes} categoryId={params.categoryId} />;
 }

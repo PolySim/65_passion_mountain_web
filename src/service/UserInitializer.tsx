@@ -18,7 +18,6 @@ const UserInitializer = ({
   const setIsAdmin = useUserStore((state) => state.setIsAdmin);
 
   useEffect(() => {
-    console.log("UserInitializer", user, idToken, isAdmin);
     user && setUser(user);
     idToken && setIdToken(idToken);
     setIsAdmin(isAdmin);

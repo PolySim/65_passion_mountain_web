@@ -9,6 +9,7 @@ import Header from "@/components/header/Header";
 import Footer from "@/components/footer/Footer";
 import UserInitializer from "@/service/UserInitializer";
 import { UserService } from "@/service/UserService";
+import { useUserStore } from "@/store/userStore";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -30,6 +31,7 @@ export default async function RootLayout({
     UserService.isAdmin(),
     UserService.idToken(),
   ]);
+  useUserStore.setState({ user, isAdmin, idToken });
 
   return (
     <html lang="fr">

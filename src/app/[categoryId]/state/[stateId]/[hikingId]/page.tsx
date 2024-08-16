@@ -9,6 +9,7 @@ import Interest from "@/components/hikes/Information/Interest";
 import dynamic from "next/dynamic";
 import { getFavoriteHikes } from "@/utils/hikes/hikesAction";
 import { UserService } from "@/service/UserService";
+import { useUserStore } from "@/store/userStore";
 
 const GPX = dynamic(() => import("@/components/hikes/GPX"), { ssr: false });
 
@@ -17,10 +18,11 @@ export default async function HikingPage({
 }: {
   params: { categoryId: string; hikingId: string };
 }) {
+  const idToken = useUserStore.getState().idToken;
   const hiking = await getHiking({ hikingId: params.hikingId });
   const gpx = await getGPX({ hikingId: params.hikingId });
   const favorites = await getFavoriteHikes({
-    token: (await UserService.idToken()) || "",
+    token: idToken || "",
     userId: await UserService.id(),
   });
 
