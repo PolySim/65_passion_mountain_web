@@ -7,6 +7,8 @@ import { cn } from "@/lib/utils";
 import WindowSizeInitializer from "@/service/WindowSizeInitializer";
 import Header from "@/components/header/Header";
 import Footer from "@/components/footer/Footer";
+import UserInitializer from "@/service/UserInitializer";
+import { UserService } from "@/service/UserService";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -23,11 +25,18 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const [user, isAdmin, idToken] = await Promise.all([
+    UserService.user(),
+    UserService.isAdmin(),
+    UserService.idToken(),
+  ]);
+
   return (
     <html lang="fr">
       <UserProvider>
         <ValidUser />
         <WindowSizeInitializer />
+        <UserInitializer user={user} isAdmin={isAdmin} idToken={idToken} />
         <body
           className={cn(
             inter.className,
