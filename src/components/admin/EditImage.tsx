@@ -60,6 +60,7 @@ const EditImage = ({
         alt={`image ${image}`}
         width={500}
         height={281}
+        unoptimized
         className="aspect-video w-full object-cover rounded-lg cursor-grab"
       />
       <div className="absolute bottom-0 w-full flex justify-around items-center gap-4 bg-black/50 px-2 py-1 rounded-b-lg border-t-2 border-white/50">

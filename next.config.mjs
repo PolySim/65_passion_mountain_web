@@ -7,6 +7,7 @@ const nextConfig = {
       "127.0.0.1:3210",
       "141.94.205.91:3210",
       "141.94.205.91",
+      "api.simondesdevises.com",
     ],
   },
 };
