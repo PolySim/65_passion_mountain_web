@@ -9,6 +9,7 @@ const nextConfig = {
       "141.94.205.91",
       "api.simondesdevises.com",
     ],
+    unoptimized: true,
   },
 };
 
