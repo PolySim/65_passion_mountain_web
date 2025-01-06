@@ -22,7 +22,6 @@ export default async function CategoryPage({
   params: { categoryId: string };
 }) {
   const idToken = useUserStore.getState().idToken;
-  console.log("idToken", idToken);
   const hikes = await getHikes(params.categoryId, idToken || "");
 
   return <GridHikes hikes={hikes} categoryId={params.categoryId} />;
