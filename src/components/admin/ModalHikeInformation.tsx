@@ -23,14 +23,6 @@ import { useToast } from "@/components/ui/use-toast";
 import { updateHeader } from "@/utils/hiking/hikingAction";
 import { useState } from "react";
 
-const formSchema = z.object({
-  title: z
-    .string()
-    .min(3, { message: "Le titre doit être au minimum de 3 caractères" }),
-  difficulty: z.string().min(1),
-  state: z.string().min(1),
-});
-
 const ModalHikeInformation = ({
   difficulties,
   states,
@@ -46,6 +38,14 @@ const ModalHikeInformation = ({
   };
   hikingId?: string;
 }) => {
+  const formSchema = z.object({
+    title: z
+      .string()
+      .min(3, { message: "Le titre doit être au minimum de 3 caractères" }),
+    difficulty: z.string().min(1),
+    state: states.length > 0 ? z.string().min(1) : z.string().default("-1"),
+  });
+
   const [isOpen, setIsOpen] = useState(false);
   const params = useParams();
   const categoryId = params.categoryId as string;
@@ -146,16 +146,18 @@ const ModalHikeInformation = ({
                   label: difficulty.difficulty,
                 }))}
               />
-              <FormSelect
-                control={form.control}
-                name="state"
-                label="Massif"
-                disabled={form.formState.isSubmitting}
-                options={states.map((state) => ({
-                  value: state.id.toString(),
-                  label: state.state,
-                }))}
-              />
+              {states.length > 0 && (
+                <FormSelect
+                  control={form.control}
+                  name="state"
+                  label="Massif"
+                  disabled={form.formState.isSubmitting}
+                  options={states.map((state) => ({
+                    value: state.id.toString(),
+                    label: state.state,
+                  }))}
+                />
+              )}
             </div>
             <DialogFooter className="flex justify-end gap-2">
               <DialogClose asChild>
