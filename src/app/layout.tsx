@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import "./globals.css";
 import { UserProvider } from "@auth0/nextjs-auth0/client";
 import ValidUser from "@/service/validUser";
@@ -10,8 +9,6 @@ import Footer from "@/components/footer/Footer";
 import UserInitializer from "@/service/UserInitializer";
 import { UserService } from "@/service/UserService";
 import { useUserStore } from "@/store/userStore";
-
-const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: {
@@ -41,7 +38,6 @@ export default async function RootLayout({
         <UserInitializer user={user} isAdmin={isAdmin} idToken={idToken} />
         <body
           className={cn(
-            inter.className,
             "flex flex-col w-screen min-h-screen h-screen overflow-y-auto overflow-x-hidden",
           )}
         >

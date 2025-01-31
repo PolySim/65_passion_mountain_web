@@ -58,7 +58,7 @@ const SearchBar = ({ hikes }: { hikes: HikingSearch[] }) => {
           type="text"
           onChange={(e) => onChange(e.target.value)}
           placeholder="Recherche des randos, escalades, refuges ..."
-          className="text-sm text-gray-900 placeholder:text-gray-400 focus:outline-none w-full"
+          className="text-sm text-gray-900 placeholder:text-gray-400 focus:outline-hidden w-full"
         />
       </div>
       {hikesSearch.length > 0 && (
